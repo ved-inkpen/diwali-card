@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diwali Family Card 🪔</title>
+<meta name="description" content="Add your wish, light your diya, and pass it on to the family.">
+<meta property="og:title" content="A Diwali card is waiting for your light 🪔">
+<meta property="og:description" content="Add your wish, light your diya, and pass it on to the family.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Yatra+One&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0}
+  html,body{min-height:100%}
+  body{font-family:'Poppins',system-ui,sans-serif;color:#fff4dc;
+    background:radial-gradient(ellipse at 50% 0%,#4a1048 0%,#250832 45%,#0d0216 100%) fixed;
+    display:flex;justify-content:center;padding:28px 14px 60px}
+  #sky{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+  #app{position:relative;z-index:1;width:100%;max-width:460px}
+
+  .card{position:relative;background:linear-gradient(160deg,rgba(110,20,60,.88),rgba(50,8,45,.92));
+    border:2px solid rgba(255,204,77,.55);border-radius:26px;padding:58px 22px 26px;
+    box-shadow:0 0 40px rgba(255,140,26,.25),inset 0 0 30px rgba(255,204,77,.08);
+    overflow:hidden;animation:rise .8s ease both}
+  .card.complete{animation:rise .8s ease both,glow 2.5s ease-in-out infinite alternate}
+
+  /* marigold toran */
+  .toran{position:absolute;top:-4px;left:0;right:0;display:flex;justify-content:space-between;padding:0 4px}
+  .toran i{position:relative;width:20px;height:20px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%,#ffd66b,#ff8c1a 60%,#c9530a);
+    box-shadow:0 2px 4px rgba(0,0,0,.35);transform:translateY(var(--y));
+    animation:sway 3s ease-in-out var(--d) infinite alternate}
+  .toran i.y{background:radial-gradient(circle at 35% 35%,#fff3a0,#ffc72c 60%,#d99a00)}
+  .toran i.leaf::after{content:'';position:absolute;left:50%;top:17px;width:9px;height:16px;
+    background:linear-gradient(#3fae5a,#1f7a3a);border-radius:0 100% 0 100%;transform:translateX(-50%) rotate(45deg)}
+
+  .head{position:relative;text-align:center;padding:16px 0 6px}
+  .rangoli{position:absolute;left:50%;top:50%;width:240px;height:240px;transform:translate(-50%,-50%);opacity:.32;pointer-events:none}
+  .rangoli svg{width:100%;height:100%;animation:spin 50s linear infinite}
+  h1{position:relative;font-family:'Yatra One',Georgia,serif;font-weight:400;font-size:2.5rem;line-height:1.1;
+    background:linear-gradient(180deg,#fff2b0,#ffcc4d 50%,#ff9f1a);-webkit-background-clip:text;background-clip:text;
+    color:transparent;filter:drop-shadow(0 0 12px rgba(255,180,50,.5))}
+  .fam{position:relative;margin-top:6px;opacity:.92;letter-spacing:.4px}
+  .fam b{color:#ffcc4d}
+  .intro{font-size:.88rem;text-align:center;opacity:.9;line-height:1.55;margin-top:14px}
+  .banner{text-align:center;font-family:'Yatra One',serif;font-size:1.2rem;color:#fff2b0;margin-top:10px;animation:pop .8s both}
+
+  /* diyas */
+  .diyas{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:12px 6px;margin:22px 0 12px}
+  .diya{text-align:center;font-size:.72rem;min-width:0}
+  .diya svg{width:56px;height:66px;overflow:visible;display:block;margin:0 auto}
+  .diya svg *{transform-box:view-box}
+  .diya .bowl{filter:grayscale(.75) brightness(.55);transition:filter 1s}
+  .diya.lit .bowl{filter:none}
+  .diya .fl{transform-origin:30px 34px;transform:scale(0);opacity:0;transition:transform .7s cubic-bezier(.3,1.8,.5,1),opacity .4s}
+  .diya.lit .fl{transform:scale(1);opacity:1}
+  .diya .fl path{transform-origin:30px 34px;animation:flick .16s ease-in-out infinite alternate}
+  .diya .fl path+path{animation-duration:.21s}
+  .diya .halo{opacity:0;transition:opacity 1.2s}
+  .diya.lit .halo{opacity:1;animation:pulse 2.4s ease-in-out infinite}
+  .diya span{display:block;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ffe3a3}
+  .diya:not(.lit) span{opacity:.45}
+
+  .prog{height:8px;border-radius:9px;background:rgba(0,0,0,.3);overflow:hidden}
+  .prog i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,#ff8c1a,#ffcc4d);
+    box-shadow:0 0 10px #ffcc4d;transition:width 1s .8s}
+  .prog-label{text-align:center;font-size:.8rem;margin-top:8px;opacity:.85}
+
+  .wishes{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:10px}
+  .wishes li{background:rgba(0,0,0,.22);border:1px solid rgba(255,204,77,.18);border-radius:14px;padding:10px 12px;display:flex;gap:10px;align-items:flex-start}
+  .wishes li.new{animation:pop .7s 1s both}
+  .wishes li em{font-style:normal;font-size:1.1rem;line-height:1.3}
+  .wishes b{color:#ffcc4d;font-size:.85rem}
+  .wishes p{font-size:.88rem;line-height:1.45;overflow-wrap:anywhere}
+
+  /* forms */
+  h3{font-family:'Yatra One',serif;font-weight:400;color:#ffcc4d;font-size:1.3rem;text-align:center}
+  .turn{margin-top:20px;padding-top:16px;border-top:1px dashed rgba(255,204,77,.35)}
+  form{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+  label{display:flex;flex-direction:column;gap:5px;font-size:.82rem;color:#ffd98a}
+  input,textarea{font:inherit;font-size:.95rem;color:#fff;background:rgba(0,0,0,.3);border:1px solid rgba(255,204,77,.35);
+    border-radius:12px;padding:10px 12px;outline:none;resize:none}
+  input:focus,textarea:focus{border-color:#ffcc4d;box-shadow:0 0 0 3px rgba(255,204,77,.18)}
+  input::placeholder,textarea::placeholder{color:rgba(255,244,220,.4)}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:-4px}
+  .chip{font:inherit;font-size:.72rem;color:#ffe3a3;background:rgba(255,204,77,.1);border:1px solid rgba(255,204,77,.3);
+    border-radius:999px;padding:5px 10px;cursor:pointer}
+  .chip:hover{background:rgba(255,204,77,.22)}
+  .stepper{display:flex;align-items:center;gap:16px}
+  .stepper button{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,204,77,.5);background:rgba(0,0,0,.25);
+    color:#ffcc4d;font-size:1.3rem;cursor:pointer}
+  .stepper output{font-size:1.4rem;font-weight:600;min-width:2ch;text-align:center;color:#fff}
+
+  .btn{font:inherit;font-weight:600;border:0;border-radius:999px;padding:12px 18px;cursor:pointer;transition:transform .15s}
+  .btn:active{transform:scale(.96)}
+  .primary{background:linear-gradient(90deg,#ff8c1a,#ffcc4d);color:#3a0a1e;box-shadow:0 6px 20px rgba(255,140,26,.4)}
+  .wa{background:#25d366;color:#05301a}
+  .ghost{background:transparent;color:#ffcc4d;border:1px solid rgba(255,204,77,.5)}
+  .share{margin-top:20px;text-align:center;padding:16px;border-radius:18px;background:rgba(255,204,77,.08);
+    border:1px dashed rgba(255,204,77,.4);animation:pop .6s 1.1s both}
+  .share p{font-size:.85rem;opacity:.9;margin-top:4px;line-height:1.5}
+  .share-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px}
+  .note{font-size:.72rem;opacity:.7;margin-top:10px;line-height:1.4}
+  .link{display:block;margin:12px auto 0;background:none;border:0;color:#ffcc4d;text-decoration:underline;font:inherit;font-size:.8rem;cursor:pointer}
+  .foot{text-align:center;margin-top:18px;font-size:.78rem;opacity:.75}
+  .foot a{color:#ffcc4d}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,120px);background:#ffcc4d;color:#3a0a1e;
+    padding:10px 18px;border-radius:999px;font-weight:600;transition:transform .3s;z-index:5}
+  .toast.show{transform:translate(-50%,0)}
+
+  @keyframes rise{from{opacity:0;transform:translateY(30px) scale(.97)}}
+  @keyframes glow{to{box-shadow:0 0 70px rgba(255,204,77,.55),inset 0 0 40px rgba(255,204,77,.15)}}
+  @keyframes pop{from{opacity:0;transform:translateY(12px) scale(.95)}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes sway{to{transform:translateY(calc(var(--y) + 3px)) rotate(8deg)}}
+  @keyframes flick{to{transform:scale(.9,1.07) skewX(3deg)}}
+  @keyframes pulse{50%{opacity:.55}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="sky"></canvas>
+<main id="app"></main>
+<div class="toast" id="toast"></div>
+
+<!-- shared gradients for all diyas -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#ff5a00"/><stop offset=".5" stop-color="#ffb000"/><stop offset="1" stop-color="#ffe680"/>
+    </linearGradient>
+    <radialGradient id="halo">
+      <stop offset="0" stop-color="#ffd25a" stop-opacity=".85"/><stop offset="1" stop-color="#ff8c1a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>
+
+<script>
+const MAX_MEMBERS = 16, MIN_MEMBERS = 2, MAX_NAME = 24, MAX_WISH = 140;
+const BOWL_COLORS = ['#c2552d','#d9822b','#b33c5e','#9b4fb8','#2f7fb5','#2f9e6e','#c9a227','#d0496b'];
+const WISHES = [
+  ['✨ Joy & light', 'May the light of the diyas fill your life with joy and prosperity ✨'],
+  ['🍬 Sweet moments', 'Wishing you sweet moments, sweeter laddoos and the sweetest family time 🍬'],
+  ['🙏 Blessings', 'May Maa Lakshmi bless our home with health, wealth and happiness 🙏'],
+  ['❤️ Missing you', 'Happy Diwali! Missing you all and sending lots and lots of love ❤️'],
+  ['🎆 Togetherness', 'Let\'s light up the world with love, laughter and togetherness 🎆'],
+];
+const LS_KEY = 'diwali-card-lit';
+
+const app = document.getElementById('app');
+let state = null;
+
+/* ---------- state <-> URL (UTF-8 safe base64url) ---------- */
+function encode(obj) {
+  let s = '';
+  new TextEncoder().encode(JSON.stringify(obj)).forEach(b => s += String.fromCharCode(b));
+  return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+function decode(str) {
+  try {
+    const bin = atob(str.replace(/-/g, '+').replace(/_/g, '/'));
+    const o = JSON.parse(new TextDecoder().decode(Uint8Array.from(bin, c => c.charCodeAt(0))));
+    if (typeof o.f !== 'string' || typeof o.i !== 'string' || !Number.isInteger(o.n) || !Array.isArray(o.m)) return null;
+    o.n = Math.min(MAX_MEMBERS, Math.max(MIN_MEMBERS, o.n));
+    o.m = o.m.filter(x => x && typeof x.n === 'string' && typeof x.w === 'string')
+             .slice(0, o.n).map(x => ({ n: x.n.slice(0, MAX_NAME), w: x.w.slice(0, MAX_WISH) }));
+    o.f = o.f.slice(0, MAX_NAME);
+    return o;
+  } catch { return null; }
+}
+const shareUrl = () => location.origin + location.pathname + '#' + encode(state);
+const save = () => history.replaceState(null, '', '#' + encode(state));
+
+const litIds = () => { try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch { return []; } };
+function markLit(id) {
+  const a = litIds();
+  if (!a.includes(id)) { a.push(id); localStorage.setItem(LS_KEY, JSON.stringify(a.slice(-50))); }
+}
+
+const esc = s => s.replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+
+/* ---------- pieces ---------- */
+function toran() {
+  const n = 15;
+  return '<div class="toran">' + Array.from({ length: n }, (_, k) => {
+    const y = Math.sin(Math.PI * k / (n - 1)) * 14;
+    return `<i class="${k % 2 ? 'y' : ''} ${k % 3 === 1 ? 'leaf' : ''}" style="--y:${y.toFixed(1)}px;--d:${(k * .17).toFixed(2)}s"></i>`;
+  }).join('') + '</div>';
+}
+
+function rangoli() {
+  let p = '';
+  for (let k = 0; k < 16; k++) p += `<ellipse cx="0" cy="-58" rx="11" ry="34" fill="${k % 2 ? '#ff8c1a' : '#ff3d7f'}" transform="rotate(${k * 22.5})"/>`;
+  for (let k = 0; k < 8; k++)  p += `<ellipse cx="0" cy="-30" rx="9" ry="20" fill="#ffcc4d" transform="rotate(${k * 45 + 22.5})"/>`;
+  for (let k = 0; k < 24; k++) p += `<circle cx="0" cy="-96" r="3" fill="#fff2b0" transform="rotate(${k * 15})"/>`;
+  return `<svg viewBox="-100 -100 200 200">${p}<circle r="14" fill="#9b4fb8"/><circle r="7" fill="#ffcc4d"/></svg>`;
+}
+
+function header(family) {
+  return `${toran()}
+  <div class="head">
+    <div class="rangoli">${rangoli()}</div>
+    <h1>Shubh Deepavali</h1>
+    <p class="fam">from the <b id="famName">${esc(family || '____')}</b> family</p>
+  </div>`;
+}
+
+function diyaSVG(color) {
+  return `<svg viewBox="0 0 60 70" aria-hidden="true">
+    <circle class="halo" cx="30" cy="26" r="26" fill="url(#halo)"/>
+    <g class="fl">
+      <path d="M30 6 C37 17 39 24 34.5 30.5 C32.5 33.5 27.5 33.5 25.5 30.5 C21 24 23 17 30 6Z" fill="url(#flame)"/>
+      <path d="M30 17 C33 22.5 33.5 27 31.3 29.8 C30.4 30.8 29.4 30.7 28.7 29.8 C27 27 27.5 22 30 17Z" fill="#fff8d0"/>
+    </g>
+    <rect x="29.2" y="31" width="1.6" height="6" rx=".8" fill="#3a2410"/>
+    <g class="bowl">
+      <path d="M22 58 L38 58 L35.5 65 L24.5 65Z" fill="${color}"/>
+      <path d="M3 38 Q30 35 57 38 Q53 59 30 60.5 Q7 59 3 38Z" fill="${color}"/>
+      <ellipse cx="30" cy="38" rx="27" ry="4.6" fill="rgba(0,0,0,.35)"/>
+      <ellipse cx="30" cy="38.3" rx="22" ry="2.8" fill="#f2b544" opacity=".7"/>
+      <circle cx="18" cy="48" r="1.8" fill="#ffd76a"/><circle cx="30" cy="50" r="1.8" fill="#ffd76a"/><circle cx="42" cy="48" r="1.8" fill="#ffd76a"/>
+      <path d="M12 44 Q30 52 48 44" stroke="#ffd76a" stroke-width="1" fill="none" opacity=".8"/>
+    </g>
+  </svg>`;
+}
+
+function wishChips() {
+  return '<div class="chips">' + WISHES.map((w, k) => `<button type="button" class="chip" data-wish="${k}">${w[0]}</button>`).join('') + '</div>';
+}
+
+function addForm(title, sub) {
+  return `<div class="turn">
+    <h3>${title}</h3>
+    <p class="intro" style="margin-top:4px">${sub}</p>
+    <form id="addForm">
+      <label>Your name<input name="n" maxlength="${MAX_NAME}" required placeholder="e.g. Dadi, Rohan, Priya…" autocomplete="given-name"></label>
+      <label>Your Diwali wish<textarea name="w" maxlength="${MAX_WISH}" rows="3" required placeholder="Write a wish for the family…"></textarea></label>
+      ${wishChips()}
+      <button class="btn primary">🪔 Light my diya</button>
+    </form>
+  </div>`;
+}
+
+function sharePanel() {
+  const done = state.m.length >= state.n, rem = state.n - state.m.length;
+  return `<div class="share">
+    <h3>${done ? 'All diyas are glowing! 🎆' : 'Now pass it on 🪔'}</h3>
+    <p>${done
+      ? 'The card is complete. Send it to the whole family!'
+      : `${rem} more ${rem > 1 ? 'diyas' : 'diya'} to light. Send this to a family member who hasn't added their light yet.`}</p>
+    <div class="share-btns">
+      ${navigator.share ? '<button class="btn primary" data-act="share">Share…</button>' : ''}
+      <button class="btn wa" data-act="wa">WhatsApp</button>
+      <button class="btn ghost" data-act="copy">Copy link</button>
+    </div>
+    ${location.protocol === 'file:' ? '<p class="note">⚠️ You opened this file from your computer, so the link only works for you. Put the file online (e.g. Netlify Drop or GitHub Pages) before sharing it with family.</p>' : ''}
+  </div>`;
+}
+
+/* ---------- screens ---------- */
+function renderCreate(broken) {
+  celebrate(false);
+  let count = 6;
+  app.innerHTML = `<section class="card">${header('')}
+    ${broken ? '<p class="banner" style="font-size:.95rem">That card link looks broken 😕. Start a new one below.</p>' : ''}
+    <p class="intro">Make a Diwali card for your family. Light the first diya, then pass it on. Each person adds their light and a wish until every diya glows ✨</p>
+    <form id="createForm">
+      <label>Family name<input name="f" maxlength="${MAX_NAME}" required placeholder="e.g. Sharma"></label>
+      <label>How many family members will light a diya?
+        <div class="stepper"><button type="button" data-step="-1">−</button><output id="cnt">${count}</output><button type="button" data-step="1">+</button></div>
+      </label>
+      <label>Your name<input name="n" maxlength="${MAX_NAME}" required placeholder="e.g. Ved" autocomplete="given-name"></label>
+      <label>Your Diwali wish<textarea name="w" maxlength="${MAX_WISH}" rows="3" required placeholder="Write a wish for the family…"></textarea></label>
+      ${wishChips()}
+      <button class="btn primary">🪔 Light the first diya</button>
+    </form>
+  </section>`;
+
+  const form = app.querySelector('#createForm');
+  form.f.addEventListener('input', e => app.querySelector('#famName').textContent = e.target.value.trim() || '____');
+  app.querySelectorAll('[data-step]').forEach(b => b.onclick = () => {
+    count = Math.min(MAX_MEMBERS, Math.max(MIN_MEMBERS, count + +b.dataset.step));
+    app.querySelector('#cnt').textContent = count;
+  });
+  form.onsubmit = e => {
+    e.preventDefault();
+    state = {
+      i: Math.random().toString(36).slice(2, 10),
+      f: form.f.value.trim(),
+      n: count,
+      m: [{ n: form.n.value.trim(), w: form.w.value.trim() }],
+    };
+    markLit(state.i);
+    save();
+    renderCard({ justLit: 0 });
+  };
+}
+
+function renderCard({ justLit = null, showForm = false } = {}) {
+  const { f, n, m } = state;
+  const done = m.length >= n;
+  const alreadyLit = litIds().includes(state.i);
+
+  const diyas = Array.from({ length: n }, (_, k) => {
+    const on = k < m.length && k !== justLit;
+    const label = k < m.length ? esc(m[k].n) : 'waiting…';
+    return `<div class="diya ${on ? 'lit' : ''}" data-k="${k}">${diyaSVG(BOWL_COLORS[k % BOWL_COLORS.length])}<span>${label}</span></div>`;
+  }).join('');
+
+  const wishes = m.map((x, k) =>
+    `<li class="${k === justLit ? 'new' : ''}"><em>🪔</em><div><b>${esc(x.n)}</b><p>${esc(x.w)}</p></div></li>`
+  ).join('');
+
+  let action;
+  if (justLit !== null || done) action = sharePanel();
+  else if (!alreadyLit || showForm) action = addForm('Your turn! ✨', 'Add your name and a wish to light the next diya.');
+  else action = sharePanel() + '<button class="link" data-act="other">Lighting a diya for someone else on this phone?</button>';
+
+  app.innerHTML = `<section class="card ${done ? 'complete' : ''}">
+    ${header(f)}
+    ${done ? '<p class="banner">✨ The whole family is here! ✨</p>' : ''}
+    <div class="diyas">${diyas}</div>
+    <div class="prog"><i style="--w:${(justLit !== null ? justLit : m.length) / n * 100}%"></i></div>
+    <p class="prog-label">${m.length} of ${n} diyas lit</p>
+    <ul class="wishes">${wishes}</ul>
+    ${action}
+  </section>
+  <p class="foot"><a href="${location.pathname}">Start a card for another family</a></p>`;
+
+  if (justLit !== null) {
+    requestAnimationFrame(() => app.querySelector('.prog i').style.setProperty('--w', m.length / n * 100 + '%'));
+    ignite(justLit, done);
+  } else {
+    celebrate(done);
+  }
+
+  const form = app.querySelector('#addForm');
+  if (form) form.onsubmit = e => {
+    e.preventDefault();
+    const name = form.n.value.trim(), wish = form.w.value.trim();
+    if (state.m.some(x => x.n.toLowerCase() === name.toLowerCase()) &&
+        !confirm(`${name} has already lit a diya. Add another one anyway?`)) return;
+    state.m.push({ n: name, w: wish });
+    markLit(state.i);
+    save();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    renderCard({ justLit: state.m.length - 1 });
+  };
+}
+
+function ignite(k, finale) {
+  const el = app.querySelector(`.diya[data-k="${k}"]`);
+  setTimeout(() => {
+    el.classList.add('lit');
+    const r = el.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top + r.height * .3, 50, 40);
+    if (finale) {
+      for (let i = 0; i < 14; i++) setTimeout(rocket, 300 + i * 220);
+      setTimeout(() => celebrate(true), 3500);
+    }
+  }, 700);
+}
+
+/* ---------- sharing ---------- */
+function shareText() {
+  const rem = state.n - state.m.length;
+  return rem > 0
+    ? `🪔 ${rem} ${rem > 1 ? 'diyas are' : 'diya is'} still waiting in the ${state.f} family Diwali card! Add your light and wish, then pass it on:`
+    : `✨ The ${state.f} family Diwali card is complete! All ${state.n} diyas are lit. Happy Diwali! 🎆`;
+}
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+app.addEventListener('click', async e => {
+  const chip = e.target.closest('[data-wish]');
+  if (chip) {
+    const ta = chip.closest('form').querySelector('textarea');
+    ta.value = WISHES[chip.dataset.wish][1]; ta.focus();
+    return;
+  }
+  const act = e.target.closest('[data-act]')?.dataset.act;
+  if (!act) return;
+  const url = shareUrl(), text = shareText();
+  if (act === 'share') {
+    try { await navigator.share({ title: 'Diwali Family Card 🪔', text, url }); } catch {}
+  } else if (act === 'wa') {
+    window.open('https://wa.me/?text=' + encodeURIComponent(text + '\n' + url), '_blank');
+  } else if (act === 'copy') {
+    try { await navigator.clipboard.writeText(url); toast('Link copied! 🪔'); }
+    catch { prompt('Copy this link:', url); }
+  } else if (act === 'other') {
+    renderCard({ showForm: true });
+    app.querySelector('#addForm input').focus();
+  }
+});
+
+/* ---------- sky: stars, embers, fireworks ---------- */
+const sky = document.getElementById('sky'), g = sky.getContext('2d');
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const dpr = Math.min(window.devicePixelRatio || 1, 2);
+const HUES = [45, 30, 330, 280, 190, 130, 0];
+let W, H;
+const stars = [], embers = [], sparks = [], rockets = [];
+
+function resize() {
+  W = innerWidth; H = innerHeight;
+  sky.width = W * dpr; sky.height = H * dpr;
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+resize();
+addEventListener('resize', resize);
+
+for (let i = 0; i < 110; i++) stars.push({ x: Math.random(), y: Math.random() * .8, r: Math.random() * 1.3 + .3, p: Math.random() * 6.28 });
+const newEmber = anyY => ({ x: Math.random() * W, y: anyY ? Math.random() * H : H + 10, v: .25 + Math.random() * .6, r: Math.random() * 1.8 + .6, p: Math.random() * 6.28 });
+for (let i = 0; i < 30; i++) embers.push(newEmber(true));
+
+function burst(x, y, count = 80, hue = HUES[Math.random() * HUES.length | 0]) {
+  if (reduceMotion) return;
+  for (let i = 0; i < count; i++) {
+    const a = Math.random() * 6.283, s = Math.random() * 4 + 1;
+    sparks.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: 1, decay: .008 + Math.random() * .012, hue: hue + Math.random() * 24 - 12 });
+  }
+}
+function rocket() {
+  if (reduceMotion) return;
+  const ty = H * (.1 + Math.random() * .3);
+  rockets.push({ x: W * (.12 + Math.random() * .76), y: H, vy: -Math.sqrt(2 * .1 * (H - ty)), hue: HUES[Math.random() * HUES.length | 0] });
+}
+let celebrateTimer = null;
+function celebrate(on) {
+  clearInterval(celebrateTimer);
+  celebrateTimer = on ? setInterval(rocket, 1300) : null;
+}
+
+let t = 0;
+function frame() {
+  t += .016;
+  g.clearRect(0, 0, W, H);
+  g.fillStyle = '#fff';
+  for (const s of stars) {
+    g.globalAlpha = .3 + .7 * Math.abs(Math.sin(t * .8 + s.p));
+    g.beginPath(); g.arc(s.x * W, s.y * H, s.r, 0, 7); g.fill();
+  }
+  g.fillStyle = '#ffc94d';
+  for (let i = 0; i < embers.length; i++) {
+    const e = embers[i];
+    if (!reduceMotion) { e.y -= e.v; e.x += Math.sin(t + e.p) * .3; }
+    if (e.y < -10) embers[i] = newEmber(false);
+    g.globalAlpha = .35 + .3 * Math.sin(t * 2 + e.p);
+    g.beginPath(); g.arc(e.x, e.y, e.r, 0, 7); g.fill();
+  }
+  g.globalCompositeOperation = 'lighter';
+  for (let i = rockets.length - 1; i >= 0; i--) {
+    const r = rockets[i];
+    r.y += r.vy; r.vy += .1;
+    g.globalAlpha = 1; g.strokeStyle = `hsl(${r.hue},100%,75%)`; g.lineWidth = 2;
+    g.beginPath(); g.moveTo(r.x, r.y); g.lineTo(r.x, r.y - r.vy * 3); g.stroke();
+    if (r.vy > -1.2) { burst(r.x, r.y, 90, r.hue); rockets.splice(i, 1); }
+  }
+  for (let i = sparks.length - 1; i >= 0; i--) {
+    const p = sparks[i];
+    p.vx *= .98; p.vy = p.vy * .98 + .045; p.x += p.vx; p.y += p.vy; p.life -= p.decay;
+    if (p.life <= 0) { sparks.splice(i, 1); continue; }
+    g.globalAlpha = p.life; g.fillStyle = `hsl(${p.hue},100%,62%)`;
+    g.beginPath(); g.arc(p.x, p.y, 1.9, 0, 7); g.fill();
+  }
+  g.globalCompositeOperation = 'source-over';
+  g.globalAlpha = 1;
+  requestAnimationFrame(frame);
+}
+frame();
+
+/* ---------- boot ---------- */
+function init() {
+  const h = location.hash.slice(1);
+  state = h ? decode(h) : null;
+  if (state) renderCard(); else renderCreate(!!h);
+}
+addEventListener('hashchange', init);
+init();
+</script>
+</body>
+</html>
